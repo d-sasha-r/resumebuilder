@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html lang="en">
+ 
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Resume Builder UI</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="form-section">
+                <h2>Build Your Resume</h2>
+                <form>
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="John Doe">
+
+                    <label for="title">Job Title</label>
+                    <input type="text" id="title" placeholder="Web Developer">
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="johndoe24@example.com">
+
+                    <label for="phone">Phone Number</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="tel" id="phone" placeholder="+1 (100) 200-3000" style="flex: 2;">
+                        <select id="phone-type" style="flex: 2">
+                            <option value="Mobile">Mobile</option>
+                            <option value="Landline">Landline</option>
+                        </select>
+                    </div>
+
+                    <label for="experience">Experience</label>
+                    <textarea id="experience" placeholder="Company A - Software Engineer (4 Years)&#10;Company B - Intern (1 Month)"></textarea>
+
+                    <label for="education">Education</label>
+                    <textarea id="education" placeholder="Institution Name | Major, Degree Received | Years Attended&#10;Best University | Bachelors, Computer Science | 2022 - 2026"></textarea>
+
+                    <label for="skills">Skills</label>
+                    <textarea id="skills" placeholder="HTML, CSS, JavaScript"></textarea>
+
+                    <label for="projects">Projects</label>
+                    <textarea id="projects" placeholder="Title | Description | Link  (optional)&#10;Resume Builder | A web app to build a printable resume | https://mywebsite.app"></textarea>
+
+                    <button type="button" id="reset-btn">RESET</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="preview-section">
+            <div id="pdf-container">
+                <div class="resume">
+                    <h1 id="preview-name">John Doe</h1>
+                    <h3 id="preview-title">Web Developer</h3>
+                    <p>Email: <span id="preview-email">johndoe24@example.com</span></p>
+                    <p>
+                        Phone: <span id="preview-phone">+1 (100) 200-3000</span>
+                        <span id="preview-phone-type" class="phone-type-badge">Mobile</span>
+                    </p>
+                    <h4>Experience</h4>
+                    <ul id="preview-experience">
+                        <li>Company A - Software Engineer (4 Years)</li>
+                        <li>Company B - Intern (1 Month)</li>
+                    </ul>
+                    <h4>Education</h4>
+                    <ul id="preview-education">
+                        <li>Best University - Bachelors, Computer Science (2022-2026)</li>
+                    </ul>
+                    <h4>Skills</h4>
+                    <ul id="preview-skills">
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>JavaScript</li>
+                    </ul>
+                    <h3>Projects</h3>
+                    <div id="preview-projects"></div>
+                </div>
+            </div>
+            <button class="print-btn" id="save-pdf-btn">Save As PDF</button>
+        <script>
+            const nameInput = document.getElementById('name');
+            const titleInput = document.getElementById('title');
+            const emailInput = document.getElementById('email');
+            const experienceInput = document.getElementById('experience');
+            const skillsInput = document.getElementById('skills');
+            const projectsInput = document.getElementById('projects');
+            const phoneTypeInput = document.getElementById('phone-type');
+            const phoneInput = document.getElementById('phone');
+            const educationInput = document.getElementById('education');
+
+            const previewName = document.getElementById('preview-name');
+            const previewTitle = document.getElementById('preview-title');
+            const previewEmail = document.getElementById('preview-email');
+            const previewExperience = document.getElementById('preview-experience');
+            const previewSkills = document.getElementById('preview-skills');
+            const previewProjects = document.getElementById('preview-projects');
+            const previewPhoneType = document.getElementById('preview-phone-type');
+            const previewEducation = document.getElementById('preview-education');
+
+            nameInput.addEventListener('input', () => {
+                previewName.textContent = nameInput.value || 'John Doe';
+            });
+
+            titleInput.addEventListener('input', () => {
+                previewTitle.textContent = titleInput.value || 'Web Developer';
+            });
+
+            emailInput.addEventListener('input', () => {
+                previewEmail.textContent = emailInput.value || 'johndoe24@example.com';
+            });
+
+            const previewPhone = document.getElementById('preview-phone');
+
+            console.log('phoneInput:', phoneInput);    // Should not be null
+            console.log('previewPhone:', previewPhone); // Should not be null
+
+            phoneInput.addEventListener('input', () => {
+                console.log('Phone input changed:', phoneInput.value);  // Debug log
+                previewPhone.textContent = phoneInput.value || '+1 (100) 200-3000';
+            });
+
+            phoneTypeInput.addEventListener('change', () => {
+                previewPhoneType.textContent = phoneTypeInput.value;
+            });
+
+            experienceInput.addEventListener('input', () => {
+                previewExperience.innerHTML = '';
+                const jobs = experienceInput.value.split('\n').map(job => job.trim()).filter(Boolean);
+                if (jobs.length) {
+                    jobs.forEach(job => {
+                        const li = document.createElement('li');
+                        li.textContent = job;
+                        previewExperience.appendChild(li);
+                    });
+                } else {
+                    previewExperience.innerHTML = `
+                    <li>Company A - Software Engineer</li>
+                    <li>Company B - Intern</li>
+                    `;
+                }
+            });
+
+            educationInput.addEventListener('input', () => {
+                previewEducation.innerHTML = '';
+                const schools = educationInput.value.split('\n').map(s => s.trim()).filter(Boolean);
+
+                if (schools.length) {
+                    schools.forEach(line => {
+                        const parts = line.split('|').map(p => p.trim());
+                        const li = document.createElement('li');
+                        li.style.marginBottom = '0.5rem';
+
+                        if (parts.length >= 3) {
+                            const name = document.createElement('strong');
+                            name.textContent = parts[0];
+
+                            const degree = document.createElement('span');
+                            degree.textContent = ` - ${parts[1]}`;
+
+                            const dates = document.createElement('span');
+                            dates.textContent = parts[2];
+                            dates.classList.add('date-badge');
+
+                            li.appendChild(name);
+                            li.appendChild(degree);
+                            li.appendChild(dates);
+                        } else {
+                            li.textContent = line;
+                        }
+
+                        previewEducation.appendChild(li);
+                    });
+                } else {
+                    previewEducation.innerHTML = `
+                    <li class="educationli"><strong>Best University</strong> - Bachelors, Computer Science <span class="date-badge">2022-2026</span></li>
+                    `;
+                }
+            });
+        
+
+            skillsInput.addEventListener('input', () => {
+                // Clear existing skills
+                previewSkills.innerHTML = '';
+                const skills = skillsInput.value.split(',').map(skill => skill.trim()).filter(Boolean);
+                if (skills.length) {
+                    skills.forEach(skill => {
+                        const li = document.createElement('li');
+                        li.textContent = skill;
+                        previewSkills.appendChild(li);
+                    });
+                } else {
+                    previewSkills.innerHTML = `
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                `;
+                }
+            });
+
+            projectsInput.addEventListener('input', () => {
+                previewProjects.innerHTML = '';
+                const projects = projectsInput.value.split('\n').map(p => p.trim()).filter(Boolean);
+                if (projects.length) {
+                    projects.forEach(line => {
+                        const [title, desc, link] = line.split('|').map(f => f.trim());
+                        const div = document.createElement('div');
+                        div.classList.add('project-bubble');
+
+                        const projTitle = document.createElement('strong');
+                        projTitle.textContent = title || 'Untitled Project';
+                        div.appendChild(projTitle);
+
+                        if (desc) {
+                            const projDesc = document.createElement('p');
+                            projDesc.textContent = desc;
+                            projDesc.style.margin = '0.25rem 0';
+                            div.appendChild(projDesc);
+                        }
+
+                        if (link) {
+                            const projLink = document.createElement('a');
+                            projLink.href = link;
+                            projLink.textContent = link;
+                            projLink.target = '_blank';
+                            projLink.style.display = 'block';
+                            projLink.style.color = "#4CAF50";
+                            div.appendChild(projLink);
+                        }
+
+                        previewProjects.appendChild(div);
+                    });
+                } else {
+                    previewProjects.textContent = '';
+                }
+            });
+
+            document.getElementById('save-pdf-btn').addEventListener('click', async () => {
+                const element = document.getElementById('pdf-container');
+                const btn = document.getElementById('save-pdf-btn');
+                
+                try {
+                    // Show loading state
+                    btn.textContent = 'Generating PDF...';
+                    btn.disabled = true;
+
+                    // Create a clone for accurate measurement
+                    const clone = element.cloneNode(true);
+                    clone.style.position = 'fixed';
+                    clone.style.left = '-9999px';
+                    clone.style.top = '0';
+                    clone.style.width = '210mm';
+                    clone.style.height = 'auto';
+                    document.body.appendChild(clone);
+
+                    // Calculate dimensions
+                    const contentHeight = clone.scrollHeight;
+                    const pageHeight = 1122; // A4 height in pixels (297mm)
+                    const needsMultiplePages = contentHeight > pageHeight;
+
+                    const opt = {
+                        margin: 10,
+                        filename: 'resume.pdf',
+                        image: { 
+                            type: 'jpeg', 
+                            quality: 0.98 
+                        },
+                        html2canvas: { 
+                            scale: 2,
+                            logging: true,
+                            useCORS: true,
+                            scrollX: 0,
+                            scrollY: 0,
+                            windowHeight: clone.scrollHeight + 50, // Add buffer
+                            allowTaint: true,
+                            letterRendering: true,
+                            ignoreElements: (el) => el.tagName === 'BUTTON'
+                        },
+                        jsPDF: { 
+                            unit: 'mm', 
+                            format: 'a4', 
+                            orientation: 'portrait'
+                        },
+                        pagebreak: { 
+                            mode: needsMultiplePages ? ['css', 'avoid-all'] : ['avoid-all', 'none'],
+                            before: '.page-break' // Only if you add specific page break classes
+                        }
+                    };
+
+                    // Generate PDF from original element (not clone)
+                    await html2pdf()
+                        .set(opt)
+                        .from(element)
+                        .save();
+
+                } catch (error) {
+                    console.error('PDF generation error:', error);
+                    alert('Failed to generate PDF. Please try again. Error: ' + error.message);
+                } finally {
+                    // Clean up
+                    const clone = document.querySelector('#pdf-container[style*="fixed"]');
+                    if (clone) document.body.removeChild(clone);
+                    
+                    // Reset button
+                    btn.textContent = 'Save As PDF';
+                    btn.disabled = false;
+                }
+            });
+
+            // Trigger rendering of default projects at page load
+            window.addEventListener('DOMContentLoaded', () => {
+                nameInput.dispatchEvent(new Event('input'));
+                titleInput.dispatchEvent(new Event('input'));
+                emailInput.dispatchEvent(new Event('input'));
+                phoneInput.dispatchEvent(new Event('input'));
+                phoneTypeInput.dispatchEvent(new Event('change'));
+                experienceInput.dispatchEvent(new Event('input'));
+                skillsInput.dispatchEvent(new Event('input'));
+                projectsInput.dispatchEvent(new Event('input'));
+                educationInput.dispatchEvent(new Event('input'));
+            });
+
+            document.getElementById('reset-btn').addEventListener('click', () => {
+                document.querySelector('form').reset();
+
+                // Also trigger input events to refresh preview
+                nameInput.dispatchEvent(new Event('input'));
+                titleInput.dispatchEvent(new Event('input'));
+                emailInput.dispatchEvent(new Event('input'));
+                experienceInput.dispatchEvent(new Event('input'));
+                skillsInput.dispatchEvent(new Event('input'));
+                projectsInput.dispatchEvent(new Event('input'));
+                });
+
+
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,551 @@
+/* Reset & Base */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+    color:#333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Left form Section */
+.form-section {
+    flex: 1;
+    background: #fff;
+    padding: 2rem;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.form-section h2 {
+    margin-bottom: 1rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+input, textarea {
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    margin-top: 1.5rem;
+    padding: 0.75rem;
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+/* Right Preview Section */
+.preview-section {
+    flex: 2;
+    background: #f0f0f0;
+    padding: 2rem;
+}
+
+#preview-projects strong {
+    font-size: 1rem;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+#preview-projects p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+#preview-projects a {
+    font-size: 0.9rem;
+    color: #4CAF50;
+    text-decoration: underline;
+}
+
+.project-bubble {
+    background: #e0e0e0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin: 0.5rem 0;
+    display: inline-block;
+    width: calc(100% - 2rem);
+    box-sizing: border-box;
+}
+
+.project-bubble strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.project-bubble .project-desc {
+    margin: 0.25rem 0;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.project-bubble .project-link {
+    font-size: 0.9rem;
+    color: #4CAF50;
+    text-decoration: underline;
+    word-break: break-all;
+}
+
+.resume {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.resume h1 {
+    margin-top: 0;
+    font-size: 2rem;
+}
+
+.resume h3 {
+    color: #555;
+    margin-top: 0.25rem;
+}
+
+.resume ul {
+    list-style: none;
+    padding: 0;
+}
+
+.resume li {
+    background: #e0e0e0;
+    display: inline-block;
+    margin: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.print-btn {
+    display: inline-block;
+    margin: 2rem auto 0;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s ease;
+    text-align: center;
+}
+
+.print-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.print-btn:active {
+    background-color: #3e8e41;
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+}
+
+@media print {
+    body {
+        background: white;
+    }
+
+    .form-section,
+    .print-btn {
+        display: none;
+    }
+
+    .preview-section {
+        display: block;
+        width: 100%;
+    }
+
+    .resume {
+        display: block;
+        width: 600px;
+        min-height:800px;
+        max-width: 100%;
+        padding: 3rem;
+        border-radius: 12px;
+        max-width: 800px;
+        margin: 0;
+        background: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        color: black;
+        font-size: 1.05rem;
+        box-sizing:border-box;
+    }
+
+    .resume h1 {
+        font-size: 24pt;
+    }
+
+    .resume h3 {
+        font-size: 14pt;
+    }
+
+    .resume h4 {
+        font-size: 12pt;
+        margin-top: 1rem;
+    }
+
+    .resume ul li {
+        background: none;
+        display: block;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.phone-type-badge {
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0.3rem 0.5rem; /* more vertical and horizontal padding */
+    font-size: 0.85rem;
+    color: #fff;
+    background-color: #4CAF50;
+    border-radius: 1rem;
+    line-height: 1.4;
+}
+
+.date-badge {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    font-size: 0.85rem;
+    padding: 0.2rem 0.5rem;
+    margin-left: 0.5rem;
+    border-radius: 0.3rem;
+}
+
+#preview-education li {
+    background: #e0e0e0;
+    display: block;
+    margin: 0.5rem 0;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+#pdf-container {
+    background:white;
+    padding:20px;
+    width:650px;
+    margin:0 auto;
+    box-sizing: border-box;
+}
+
+#pdf-container {
+    background: white;
+    padding: 20px;
+    width: 210mm; /* A4 width */
+    min-height: 297mm; /* A4 height */
+    margin: 0 auto;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #pdf-container, #pdf-container * {
+        visibility: visible;
+    }
+    #pdf-container {
+    background: white;
+    padding: 20px;
+    width: 210mm; /* A4 width */
+    min-height: auto; /* Let content determine height */
+    max-height: 297mm; /* Maximum A4 height */
+    margin: 0 auto;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    overflow: hidden; /* Prevent content from spilling */
+    }
+
+    .resume {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    page-break-after: avoid; /* Prevent page breaks */
+    page-break-inside: avoid;
+    }
+}
+
+#pdf-container {
+    background: white;
+    padding: 20px;
+    width: 210mm; /* A4 width */
+    min-height: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.resume {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+}
+
+.project-bubble {
+    background: #e0e0e0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin: 0.5rem 0;
+    display: block;
+    width: calc(100% - 2rem);
+    box-sizing: border-box;
+    page-break-inside: avoid;
+}
+
+/* Ensure project content is visible in PDF */
+#preview-projects {
+    break-inside: avoid;
+}
+
+/* Fix for phone badges in PDF */
+.phone-type-badge {
+    display: inline-block !important;
+    opacity: 1 !important;
+}
+
+/* Fix for date badges in PDF */
+.date-badge {
+    display: inline-block !important;
+    opacity: 1 !important;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #pdf-container, #pdf-container * {
+        visibility: visible;
+        position: static !important;
+    }
+    #pdf-container {
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+        width: 100%;
+        height: auto;
+    }
+    .resume {
+        padding: 10mm;
+    }
+}
+
+#pdf-container {
+    background: white;
+    padding: 20px;
+    width: 210mm;
+    min-height: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+/* Resume Content Styles */
+.resume {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+/* Project Bubbles Fix */
+.project-bubble {
+    display: block !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    background: #e0e0e0;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 8px 0;
+    width: 100%;
+}
+
+/* Force visibility of all elements */
+#pdf-container * {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Print-specific styles */
+@media print {
+    body {
+        background: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    #pdf-container {
+        width: 100% !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+    }
+    
+    .resume {
+        padding: 10mm !important;
+    }
+    
+    /* Prevent unwanted breaks */
+    h1, h2, h3, h4, ul, li, .project-bubble {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+    
+    /* Add space between sections */
+    h4 {
+        margin-top: 15px !important;
+        margin-bottom: 8px !important;
+    }
+}
+
+/* Badge visibility fixes */
+.phone-type-badge, .date-badge {
+    display: inline-block !important;
+    opacity: 1 !important;
+}
+
+/* Reset & Base */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Form Section */
+.form-section {
+    flex: 1;
+    background: #fff;
+    padding: 2rem;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+/* Preview Section */
+.preview-section {
+    flex: 2;
+    background: #f0f0f0;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+/* PDF Container - Critical Fixes */
+#pdf-container {
+    background: white;
+    padding: 20px;
+    width: 210mm;
+    min-height: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+/* Resume Content */
+.resume {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Project Bubbles - Critical Fix */
+.project-bubble {
+    background: #e0e0e0;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 8px 0;
+    display: block !important;
+    width: 100%;
+    box-sizing: border-box;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+/* Force visibility in PDF */
+#pdf-container * {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Print Media Query - Critical Fix */
+@media print {
+    body {
+        background: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    #pdf-container {
+        width: 100% !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+    }
+    
+    .resume {
+        padding: 15mm !important;
+    }
+    
+    /* Prevent breaks in content */
+    h1, h2, h3, h4, ul, li, .project-bubble, #preview-projects {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+    
+    /* Section spacing */
+    h4 {
+        margin-top: 12px !important;
+        margin-bottom: 8px !important;
+    }
+}
+
+/* [Keep all your other existing styles below this line] */
